@@ -7,33 +7,19 @@ char **summaryRanges(int *nums, int numsSize, int *returnSize){
     if(numsSize == 0) return res;
     int l = 0;
     int i;
-    for(i=1; i<numsSize; ++i){
-        printf("Enter the for loop.\n");
-        if(nums[i] == nums[i-1]+1){
-            continue;
+    for(i=1; i<=numsSize; ++i){
+        if(i == numsSize || nums[i] != nums[i-1]+1){
+            char *tmp = (char *)malloc(sizeof(char)*30);
+            if(l == i-1){
+                sprintf(tmp, "%d", nums[l]);
+            }
+            else{
+                sprintf(tmp, "%d->%d", nums[l], nums[i-1]);
+            }
+            res[(*returnSize)++] = tmp;
+            l = i;
         }
-        printf("Get an interval.\n");
-        char *tmp = (char *)malloc(sizeof(char)*30);
-        if(l == i-1){
-            sprintf(tmp, "%d", nums[l]);
-        }
-        else{
-            sprintf(tmp, "%d->%d", nums[l], nums[i-1]);
-        }
-        res[(*returnSize)++] = tmp;
-        l = i;
     }
-    char *tmp = (char *)malloc(sizeof(char)*30);
-    if(l == i-1){
-        sprintf(tmp, "%d", nums[l]);
-    }
-    else{
-        printf("Get a last interval.\n");
-        sprintf(tmp, "%d->%d", nums[l], nums[i-1]);
-    }
-    //printf("%s\n", tmp);
-    res[(*returnSize)++] = tmp;
-
     return res;
 }
 
