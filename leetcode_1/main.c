@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include "uthash.h"
+#include "../uthash.h"
 
 //Using UT_hash libery.
 
