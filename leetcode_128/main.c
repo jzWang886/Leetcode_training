@@ -1,33 +1,40 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include"../uthash.h"
+
+typedef struct node{
+    int key;
+    UT_hash_handle hh;
+} node; 
 
 int longestConsecutive(int *nums, int numsSize){
-    int max_Num = 0, max_Len = 0;
-    int *table = (int *)calloc(2000000001, sizeof(int));
+    node *hash = NULL, *s;
     for(int i=0; i<numsSize; ++i){
-        ++table[nums[i]+1000000000];
-        if(nums[i]+1000000000 > max_Num) max_Num = nums[i]+1000000000;
-    }
-    
-    int cursor = -1, current_Len = 0; 
-    while(cursor++ < max_Num){
-        if(table[cursor] == 1){
-            ++current_Len;
-            printf("cursor = %d, current_Len = %d\n", cursor, current_Len);
-            continue;
+        HASH_FIND_INT(hash, &nums[i], s);
+        if(s == NULL){
+            s = (node *)malloc(sizeof(node));
+            s->key = nums[i];
+            HASH_ADD_INT(hash, key, s);
         }
-        else{
-            if(current_Len > max_Len){
-                max_Len = current_Len;
+    }
+    int longest = 0;
+    for(int i=0; i<numsSize; ++i){
+        int tmp = nums[i]-1;
+        HASH_FIND_INT(hash, &tmp, s);
+        if(s == NULL){
+            int current_long = 0;
+            tmp = nums[i];
+            do{
+                ++current_long;
+                ++tmp;
+                HASH_FIND_INT(hash, &tmp, s);
+            }while(s != NULL);
+            if(current_long > longest){
+                longest = current_long;
             }
-            if(table[cursor] == 0) current_Len = 0;
-            else current_Len = 1;
         }
     }
-    if(current_Len > max_Len){
-        max_Len = current_Len;
-    }
-    return max_Len; 
+    return longest;
 }
 
 int main(){
