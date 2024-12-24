@@ -5,10 +5,7 @@ int cmp(const void *a, const void *b){
     int *ptr1 = *(int **)a;
     int *ptr2 = *(int **)b;
 
-    size_t i = 0;
-    while(i < 2 && ptr1[i] == ptr2[i]) ++i;
-
-    return i == 2 ? 0 :((ptr1[i]>ptr2[i])-(ptr1[i]<ptr2[i]));
+    return ptr1[0] == ptr2[0] ? 0 :((ptr1[0]>ptr2[0])-(ptr1[0]<ptr2[0]));
 }
 
 int findMinArrowShots(int **points, int pointsSize, int *pointsColSize){
